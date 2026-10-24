@@ -345,10 +345,10 @@
   function fit(el, maxPx, minPx, availW) { var s = maxPx; el.style.fontSize = s + "px"; while (el.scrollWidth > availW && s > minPx) { s -= 1; el.style.fontSize = s + "px"; } }
   function flyerHtml(firm, code, withQr) {
     var off = PRICES.off, r = function (n) { return Math.round(n * (1 - off)); };
-    var logo = '<img src="assets/logo.png" alt="" onerror="this.remove()">';
+    var logo = '';
     var qr = withQr ? '<div class="fl-qr">' + window.EC_QR.svg(MAIN_SITE, { dark: "#17181B", light: "#FFFFFF", margin: 1, label: "QR code to estimateconsultants.com" }) + "<span>SCAN TO START</span></div>" : "";
     return '<div class="flyer">' +
-      '<div class="fl-top"><div class="fl-brandrow"><div class="fl-brand">' + logo + '<div class="fl-word"><b>ESTIMATE</b> CONSULTANTS</div></div><div class="fl-tag">INDEPENDENT VEHICLE APPRAISERS<br>ASCAA-CERTIFIED · LICENSED</div></div><div class="fl-rule"></div>' +
+      '<div class="fl-top"><div class="fl-brandrow"><div class="fl-brand">' + logo + '<span class="lockup"><span class="lk-top">Estimate</span><span class="lk-bot">Consultants</span></span></div><div class="fl-tag">INDEPENDENT VEHICLE APPRAISERS<br>ASCAA-CERTIFIED · LICENSED</div></div><div class="fl-rule"></div>' +
       '<div class="fl-by">RECOMMENDED BY</div><div class="fl-firm" data-fit="40,22,720">' + esc(firm) + "</div>" +
       '<div class="fl-head">Make sure your vehicle\'s<br><em>full value</em> is counted.</div>' +
       '<div class="fl-sub">After a collision, your vehicle can be worth far less than the insurance company\'s first number. <strong>' + esc(firm) + "</strong> works with Estimate Consultants to document what your vehicle is truly worth, so your property damage claim reflects it.</div></div>" +
