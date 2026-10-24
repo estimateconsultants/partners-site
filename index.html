@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Preferred Partners — Estimate Consultants</title>
+<meta name="description" content="The Estimate Consultants Preferred Partners Program for law firms. You handle the injury. We handle the vehicle.">
+<meta name="theme-color" content="#0B0B0C">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Archivo:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#/" aria-label="Estimate Consultants Preferred Partners — home">
+    <img src="assets/logo.png" alt="" class="brand-logo" id="brandLogo" onerror="this.remove()">
+    <span class="brand-word"><b>ESTIMATE</b> CONSULTANTS</span>
+  </a>
+  <nav class="nav-actions" id="navActions" aria-label="Account"></nav>
+</header>
+
+<main id="main" tabindex="-1">
+
+<!-- ============ HOME ============ -->
+<section class="view" data-view="home" aria-labelledby="homeTitle">
+  <div class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow rise" style="--d:0">Preferred Partners Program · For law firms</p>
+      <h1 id="homeTitle" class="rise" style="--d:1">You handle the injury.<br><em>We handle the vehicle.</em></h1>
+      <p class="lede rise" style="--d:2">Your firm manages the bodily injury claim. We document what your client's vehicle is truly worth, so the property damage claim reflects its full value. <strong>Estimate Consultants</strong> is an independent firm of ASCAA-certified, licensed motor vehicle damage appraisers.</p>
+      <div class="cta-row rise" style="--d:3">
+        <a class="btn btn-gold" href="#/join">Create your firm's code</a>
+        <a class="btn btn-ghost" href="#/signin">Sign in</a>
+      </div>
+      <p class="fine rise" style="--d:4">Free for your firm. Your code works as soon as you create it, and it never expires.</p>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">How it works</p>
+      <h2>A simple partnership.<br><em>No cost to your firm.</em></h2>
+    </div>
+    <ol class="steps">
+      <li><span class="num">01</span><h3>Choose your code</h3><p>Create a promo code for your firm in under a minute. No account needed to start.</p></li>
+      <li><span class="num">02</span><h3>Your clients save 15%</h3><p>Print your personalized flyer for clients. Anyone who enters your code saves 15% on our services.</p></li>
+      <li><span class="num">03</span><h3>Your team earns $50</h3><p>Every time a client uses your code and receives an appraisal, we send $50 to whoever referred them.</p></li>
+    </ol>
+
+    <div class="duo">
+      <div class="panel dark">
+        <div class="big-fifty">$50</div>
+        <div>
+          <p class="kicker gold">Every referral</p>
+          <h3>A built-in staff bonus program</h3>
+          <p>Paid to whoever sent the client our way: intake specialist, case manager, paralegal, whoever. By PayPal, Venmo or check, with as many payees as you like.</p>
+        </div>
+      </div>
+      <div class="panel light">
+        <p class="kicker">Or give it back</p>
+        <h3>Donate it to a charity</h3>
+        <p>Many of our partners have the $50 donated to a charity of their choosing. We provide proof of receipt for every donation.</p>
+      </div>
+    </div>
+
+    <div class="panel callout">
+      <div>
+        <p class="kicker">Both directions</p>
+        <h3>Our clients need counsel. <em>We refer them to our partners.</em></h3>
+        <p>Clients ask us for legal recommendations. When they do, our Preferred Partners are the firms we refer.</p>
+      </div>
+      <ul class="ticks">
+        <li><b>Featured on our website</b><span>Listed as a Preferred Partner at estimateconsultants.com</span></li>
+        <li><b>Recommended directly</b><span>Referred to clients who request legal representation</span></li>
+        <li><b>Track everything</b><span>See every referral and payment in your private dashboard</span></li>
+      </ul>
+    </div>
+
+    <div class="closing">
+      <h2>Ready when you are.</h2>
+      <div class="cta-row center">
+        <a class="btn btn-dark" href="#/join">Create your firm's code</a>
+        <a class="btn btn-outline" href="#/signin">Sign in to your dashboard</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ JOIN ============ -->
+<section class="view" data-view="join" aria-labelledby="joinTitle">
+  <div class="shell">
+    <div class="card wizard">
+      <div class="progress" id="joinProgress" aria-hidden="true"><i></i><i></i><i></i></div>
+
+      <form class="step" data-step="1" id="joinForm1" novalidate>
+        <p class="kicker">Step 1 of 2</p>
+        <h1 id="joinTitle">Tell us about your firm</h1>
+        <p class="sub">We'll use this to set up your code and recognize you when you come back.</p>
+        <div class="field"><input id="jFirm" autocomplete="organization" maxlength="100" placeholder=" " required><label for="jFirm">Firm name</label></div>
+        <div class="grid2">
+          <div class="field"><input id="jContact" autocomplete="name" maxlength="80" placeholder=" " required><label for="jContact">Your name</label></div>
+          <div class="field"><input id="jPhone" type="tel" autocomplete="tel" maxlength="25" placeholder=" "><label for="jPhone">Phone (optional)</label></div>
+        </div>
+        <div class="field"><input id="jEmail" type="email" autocomplete="email" maxlength="120" placeholder=" " required><label for="jEmail">Email</label></div>
+        <p class="err" id="jErr1" role="alert"></p>
+        <div class="actions"><a class="link" href="#/">Back</a><button class="btn btn-dark" type="submit">Continue</button></div>
+      </form>
+
+      <form class="step" data-step="2" id="joinForm2" novalidate hidden>
+        <p class="kicker">Step 2 of 2</p>
+        <h1>Choose your code</h1>
+        <p class="sub">This is what your clients type in. Letters and numbers only, and it works indefinitely.</p>
+        <div class="field code-field"><input id="jCode" maxlength="24" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder=" " required><label for="jCode">Your promo code</label><span class="status" id="jCodeStatus" aria-live="polite"></span></div>
+        <div class="suggest" id="jSuggest" aria-label="Suggestions"></div>
+        <div class="ticket-preview" aria-hidden="true"><span>15% OFF</span><b id="jTicket">YOURCODE</b></div>
+        <p class="err" id="jErr2" role="alert"></p>
+        <div class="actions"><button class="link" type="button" id="jBack">Back</button><button class="btn btn-gold" type="submit" id="jCreate">Create my code</button></div>
+      </form>
+
+      <div class="step done" data-step="3" id="joinDone" hidden>
+        <div class="seal" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg></div>
+        <p class="kicker">You're a Preferred Partner</p>
+        <h1>Your code is live.</h1>
+        <div class="ticket"><span>15% OFF · NEVER EXPIRES</span><b id="doneCode">CODE</b><small id="doneFirm"></small></div>
+        <div class="stack">
+          <button class="btn btn-gold wide" type="button" id="doneFlyer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M7 14h10v7H7z"/></svg>Print your client flyer</button>
+          <button class="btn btn-outline wide" type="button" id="doneAccount">Finish setting up my account</button>
+        </div>
+        <p class="fine">Your account lets you track referrals and choose where each $50 goes. We'll email a 6-digit code to confirm it's you. You can also do this later.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SIGN IN ============ -->
+<section class="view" data-view="signin" aria-labelledby="signinTitle">
+  <div class="shell">
+    <div class="card wizard narrow">
+      <form class="step" id="siForm1" novalidate>
+        <p class="kicker">Welcome back</p>
+        <h1 id="signinTitle">Sign in</h1>
+        <p class="sub">Enter the email you used for your firm. We'll send a 6-digit code. No password needed.</p>
+        <div class="field"><input id="siEmail" type="email" autocomplete="email" maxlength="120" placeholder=" " required><label for="siEmail">Email</label></div>
+        <p class="err" id="siErr1" role="alert"></p>
+        <div class="actions"><a class="link" href="#/">Back</a><button class="btn btn-dark" type="submit" id="siSend">Email me a code</button></div>
+        <p class="fine center">New here? <a href="#/join">Create your firm's code</a></p>
+      </form>
+      <form class="step" id="siForm2" novalidate hidden>
+        <p class="kicker">Check your email</p>
+        <h1>Enter your code</h1>
+        <p class="sub" id="siSent">We sent a 6-digit code.</p>
+        <div class="otp" id="otp" role="group" aria-label="6-digit code">
+          <input inputmode="numeric" autocomplete="one-time-code" maxlength="1" aria-label="Digit 1"><input inputmode="numeric" maxlength="1" aria-label="Digit 2"><input inputmode="numeric" maxlength="1" aria-label="Digit 3"><input inputmode="numeric" maxlength="1" aria-label="Digit 4"><input inputmode="numeric" maxlength="1" aria-label="Digit 5"><input inputmode="numeric" maxlength="1" aria-label="Digit 6">
+        </div>
+        <p class="err" id="siErr2" role="alert"></p>
+        <div class="actions"><button class="link" type="button" id="siChange">Use a different email</button><button class="btn btn-dark" type="submit" id="siVerify">Sign in</button></div>
+        <p class="fine center"><button class="link" type="button" id="siResend">Send a new code</button></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DASHBOARD ============ -->
+<section class="view" data-view="dashboard" aria-labelledby="dashTitle">
+  <div class="dash">
+    <div class="dash-head">
+      <div>
+        <p class="kicker" id="dashSince">Preferred Partner</p>
+        <h1 id="dashTitle">Your dashboard</h1>
+      </div>
+      <div class="code-chip" id="codeChip">
+        <span>Your code</span><b id="dashCode">—</b>
+        <button class="chip-btn" id="copyCode" type="button" aria-label="Copy code">Copy</button>
+      </div>
+    </div>
+
+    <div class="banner" id="verifyBanner" hidden></div>
+
+    <div class="stats" id="stats" aria-live="polite">
+      <div class="stat"><span>Clients who used your code</span><b id="stSubmitted">0</b></div>
+      <div class="stat"><span>Became appraisals</span><b id="stAppraisals">0</b></div>
+      <div class="stat gold"><span>On the way to you</span><b id="stOwed">$0</b><small id="stOwedN"></small></div>
+      <div class="stat"><span>Paid to date</span><b id="stPaid">$0</b><small id="stPaidN"></small></div>
+    </div>
+
+    <div class="dash-grid">
+      <div class="card block">
+        <div class="block-head"><div><h2>Referrals</h2><p>Each time a client uses your code and we begin their appraisal, $50 is earned.</p></div></div>
+        <div id="refs"></div>
+      </div>
+
+      <aside class="side">
+        <div class="card block">
+          <div class="block-head"><div><h2>Where the $50 goes</h2><p>Add one or several. You choose who gets each referral.</p></div></div>
+          <div id="payees"></div>
+          <button class="btn btn-outline wide" type="button" id="addPayee">+ Add a destination</button>
+        </div>
+
+        <div class="card block flyer-card">
+          <h2>Client flyer</h2>
+          <p>A full-page flyer with your firm's name and code, ready to print and hand to clients.</p>
+          <button class="btn btn-gold wide" type="button" id="dashFlyer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M7 14h10v7H7z"/></svg>Preview &amp; print</button>
+        </div>
+
+        <div class="card block">
+          <h2>Business cards</h2>
+          <p class="muted" id="cardsNote">Running low? Request more and we'll ship them to your office.</p>
+          <button class="btn btn-outline wide" type="button" id="reqCards">Request more cards</button>
+        </div>
+
+        <div class="card block">
+          <div class="block-head"><div><h2>Firm details</h2></div><button class="link" type="button" id="editProfile">Edit</button></div>
+          <dl class="kv" id="profile"></dl>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot" id="foot">
+  <span>© <span id="yr"></span> Estimate Consultants · Independent vehicle appraisers</span>
+  <span><a href="tel:+19103336001">910-333-6001</a> · <a href="mailto:kevin@estimateconsultants.com">kevin@estimateconsultants.com</a> · <a href="https://estimateconsultants.com">estimateconsultants.com</a></span>
+</footer>
+
+<!-- ============ modals ============ -->
+<div class="overlay" id="flyerModal" hidden role="dialog" aria-modal="true" aria-labelledby="flyerTitle">
+  <div class="modal flyer-modal">
+    <div class="modal-head">
+      <div><p class="kicker">Client flyer</p><h2 id="flyerTitle">Ready to print</h2></div>
+      <button class="x" type="button" data-close aria-label="Close">×</button>
+    </div>
+    <div class="flyer-stage" id="flyerStage"><div class="flyer-scale" id="flyerScale"></div></div>
+    <div class="modal-foot">
+      <label class="switch"><input type="checkbox" id="optQr" checked><span></span>Include QR code</label>
+      <div class="modal-actions">
+        <button class="btn btn-outline" type="button" data-close>Close</button>
+        <button class="btn btn-gold printbtn" type="button" id="printBtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M7 14h10v7H7z"/></svg><span>Print flyer</span></button>
+      </div>
+    </div>
+    <p class="fine center" style="margin:0 0 4px">Tip: choose "Save as PDF" in the print window to keep a digital copy. Print on US Letter at 100% scale.</p>
+  </div>
+</div>
+
+<div class="overlay" id="payeeModal" hidden role="dialog" aria-modal="true" aria-labelledby="payeeTitle">
+  <form class="modal small" id="payeeForm" novalidate>
+    <div class="modal-head"><div><p class="kicker">Payout destination</p><h2 id="payeeTitle">Add a destination</h2></div><button class="x" type="button" data-close aria-label="Close">×</button></div>
+    <div class="field"><input id="pLabel" maxlength="60" placeholder=" " required><label for="pLabel">Who is this for? (e.g. Intake team, Maria)</label></div>
+    <fieldset class="seg" id="pMethod"><legend class="sr">How should we pay?</legend>
+      <label><input type="radio" name="pm" value="paypal" checked><span>PayPal</span></label>
+      <label><input type="radio" name="pm" value="venmo"><span>Venmo</span></label>
+      <label><input type="radio" name="pm" value="check"><span>Check</span></label>
+      <label><input type="radio" name="pm" value="charity"><span>Charity</span></label>
+    </fieldset>
+    <div class="field"><input id="pDetail" maxlength="300" placeholder=" " required><textarea id="pDetailArea" maxlength="300" rows="3" placeholder=" " hidden></textarea><label for="pDetail" id="pDetailLabel">PayPal email</label></div>
+    <div class="field" id="pExtraWrap" hidden><input id="pExtra" maxlength="200" placeholder=" "><label for="pExtra" id="pExtraLabel">Notes (optional)</label></div>
+    <p class="hint" id="pHint"></p>
+    <p class="err" id="pErr" role="alert"></p>
+    <div class="modal-actions end"><button class="btn btn-outline" type="button" data-close>Cancel</button><button class="btn btn-dark" type="submit" id="pSave">Save destination</button></div>
+  </form>
+</div>
+
+<div class="overlay" id="cardsModal" hidden role="dialog" aria-modal="true" aria-labelledby="cardsTitle">
+  <form class="modal small" id="cardsForm" novalidate>
+    <div class="modal-head"><div><p class="kicker">Business cards</p><h2 id="cardsTitle">Request more cards</h2></div><button class="x" type="button" data-close aria-label="Close">×</button></div>
+    <div class="field"><textarea id="cShip" maxlength="300" rows="4" placeholder=" " required></textarea><label for="cShip">Ship to (name and full mailing address)</label></div>
+    <div class="field"><input id="cNote" maxlength="300" placeholder=" "><label for="cNote">Notes (optional)</label></div>
+    <p class="hint">Free for Preferred Partners. We'll email you if we have any questions.</p>
+    <p class="err" id="cErr" role="alert"></p>
+    <div class="modal-actions end"><button class="btn btn-outline" type="button" data-close>Cancel</button><button class="btn btn-dark" type="submit" id="cSend">Send request</button></div>
+  </form>
+</div>
+
+<div class="overlay" id="profileModal" hidden role="dialog" aria-modal="true" aria-labelledby="profTitle">
+  <form class="modal small" id="profileForm" novalidate>
+    <div class="modal-head"><div><p class="kicker">Firm details</p><h2 id="profTitle">Edit details</h2></div><button class="x" type="button" data-close aria-label="Close">×</button></div>
+    <div class="field"><input id="eFirm" maxlength="100" placeholder=" " required><label for="eFirm">Firm name</label></div>
+    <div class="field"><input id="eContact" maxlength="80" placeholder=" " required><label for="eContact">Contact name</label></div>
+    <div class="field"><input id="ePhone" type="tel" maxlength="25" placeholder=" "><label for="ePhone">Phone</label></div>
+    <p class="hint">To change your sign-in email or code, call 910-333-6001.</p>
+    <p class="err" id="eErr" role="alert"></p>
+    <div class="modal-actions end"><button class="btn btn-outline" type="button" data-close>Cancel</button><button class="btn btn-dark" type="submit">Save</button></div>
+  </form>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<div id="printRoot" aria-hidden="true"></div>
+
+<script src="assets/qr.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
