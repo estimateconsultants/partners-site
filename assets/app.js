@@ -7,7 +7,7 @@
   var API = "https://script.google.com/macros/s/AKfycbw9irQ5WbSoTcrPq8d4EU7L0U0pF3XJ-akfX7SS1LvdYOohEtF6-d_967_T-UEhsgrK/exec";
   var MAIN_SITE = "https://estimateconsultants.com";
   var PHONE = "910-333-6001", EMAIL = "kevin@estimateconsultants.com";
-  var PRICES = { dvRetainer: 199, dvAfter: 299, tl: 299, off: 0.15 };
+  var PRICES = { dvSelf: 299, tl: 299, off: 0.15 };
 
   /* ===== helpers ===== */
   var $ = function (id) { return document.getElementById(id); };
@@ -355,7 +355,7 @@
       '<div class="fl-body">' +
       '<div class="fl-code"><div><div class="fl-codelbl">YOUR PARTNER CODE · 15% OFF EVERYTHING</div><div class="fl-codeval" data-fit="64,30,440">' + esc(code) + '</div><div class="fl-codehow">Enter this code in the <b>Partner section at the top of estimateconsultants.com</b> before you submit your vehicle details. The 15% comes off every invoice.</div></div>' + qr + "</div>" +
       '<div class="fl-cards">' +
-      '<div class="fl-card"><div class="k">VEHICLE REPAIRED · NOT AT FAULT</div><h3>Diminished Value</h3><p>An accident history lowers resale value, even after quality repairs. We pursue the claim from the at-fault insurer.</p><div class="fl-price"><div class="fl-prow h"><span></span><span>STANDARD</span><span class="w">WITH CODE</span></div><div class="fl-prow"><span class="l">Retainer</span><span class="s">$' + PRICES.dvRetainer + '</span><span class="n">$' + r(PRICES.dvRetainer) + '</span></div><div class="fl-prow"><span class="l">Paid after offer</span><span class="s">$' + PRICES.dvAfter + '</span><span class="n">$' + r(PRICES.dvAfter) + '</span></div><div class="fl-note"><span><b>Money-back guarantee.</b> If the insurer\'s offer doesn\'t cover our fee, we refund it.</span></div></div></div>' +
+      '<div class="fl-card"><div class="k">VEHICLE REPAIRED · NOT AT FAULT</div><h3>Diminished Value &middot; Self-Service</h3><p>Get a certified appraisal, demand letter template, and instructions. You submit the claim and handle insurer communication. Full-service representation is available by request.</p><div class="fl-price"><div class="fl-prow h"><span></span><span>STANDARD</span><span class="w">WITH CODE</span></div><div class="fl-prow"><span class="l">One-time fee</span><span class="s">$' + PRICES.dvSelf + '</span><span class="n">$' + r(PRICES.dvSelf) + '</span></div><div class="fl-note"><span><b>No money-back guarantee on self-service.</b> Optional full service is $199 + $299 ($498 total) and includes insurer representation with its own guarantee terms.</span></div></div></div>' +
       '<div class="fl-card"><div class="k">TOTAL LOSS · YOUR OWN INSURER</div><h3>Appraisal Clause</h3><p>If your own insurer totals the vehicle with a low offer, we invoke the appraisal clause in your policy and act as your appraiser.</p><div class="fl-price"><div class="fl-prow h"><span></span><span>STANDARD</span><span class="w">WITH CODE</span></div><div class="fl-prow"><span class="l">Flat fee</span><span class="s">$' + PRICES.tl + '</span><span class="n">$' + r(PRICES.tl) + "</span></div></div></div>" +
       "</div>" +
       '<div class="fl-steps"><div class="fl-step"><i>1</i><b>Enter your code</b><span>At estimateconsultants.com, in the Partner section.</span></div><div class="fl-step"><i>2</i><b>Tell us about your vehicle</b><span>Year, make, model, mileage and your claim details.</span></div><div class="fl-step"><i>3</i><b>We take it from there</b><span>We document the value and deal with the insurer for you.</span></div></div>' +
