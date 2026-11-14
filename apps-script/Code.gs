@@ -3448,7 +3448,7 @@ const WAVE_KINDS = {
   DV_RETAINER: { all: ['diminished'], any: ['retainer', 'initial', 'intake', 'down', 'deposit'], none: ['final', 'balance', 'remaining', 'deferred', 'direct', 'no insurer', 'appraisal clause'], fallbackPrice: 199 },
   DV_FINAL:    { all: ['diminished'], any: ['final', 'balance', 'remaining', 'deferred'], none: ['retainer', 'initial', 'intake', 'down', 'deposit', 'direct', 'no insurer', 'appraisal clause'], fallbackPrice: 299 },
   DV_DIRECT:   { all: ['diminished'], any: ['direct', 'no insurer', 'without insurer', 'no insurance'], none: ['retainer', 'initial', 'intake', 'down', 'deposit', 'balance', 'remaining', 'deferred', 'appraisal clause'], fallbackPrice: 299 },
-  DV_APPRAISAL_CLAUSE: { all: ['diminished', 'appraisal clause'], any: [], none: ['retainer', 'initial', 'intake', 'down', 'deposit', 'balance', 'remaining', 'deferred', 'direct', 'no insurer'], fallbackPrice: 399 },
+  DV_APPRAISAL_CLAUSE: { all: [], any: ['nc diminished', 'nc diminished value', 'appraisal clause'], none: ['retainer', 'initial', 'intake', 'down', 'deposit', 'balance', 'remaining', 'deferred', 'direct', 'no insurer', 'total loss'], fallbackPrice: 399 },
   TOTAL_LOSS:  { all: ['total loss'], any: [], none: ['diminished'], fallbackPrice: 299 },
   STANDARD:    { all: [], any: ['estate', 'probate', 'bank', 'collateral', 'irs', 'donation', 'divorce', 'fair market', 'fmv', 'standard'], none: ['diminished', 'total loss'], fallbackPrice: 299 }
 };
