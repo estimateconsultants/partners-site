@@ -16,7 +16,7 @@ const VALUATIONS_TAB_NAME = "valuations";
 // Must be declared before anything at top level uses it.
 const DIRECT_DV_LABEL = 'Diminished Value Appraisal (No Insurer - Direct)';
 
-// North Carolina (1st- or 3rd-party) Diminished Value handled through the policy's Appraisal Clause (flat $299, invoiced before delivery,
+// North Carolina (1st- or 3rd-party) Diminished Value handled through the policy's Appraisal Clause (flat $399, invoiced before delivery,
 // same flow as Total Loss). Its 3 templates (intake, report, demand letter) are installed with the
 // "Install NC Appraisal Clause DV Templates" menu item and their IDs are kept in Script Properties.
 const NC_DV_AC_LABEL = 'North Carolina Diminished Value - Policy Appraisal Clause';
@@ -1502,7 +1502,7 @@ function showVehicleSidebar() {
 const MANUAL_CLAIM_TYPES = [
   ['Diminished Value (other driver\'s insurance, not at fault)', '3rd-Party Loss in Market Value (Diminished Value) Claim', '3rd Party'],
   ['Diminished Value - NO insurer (direct, $299, paid after completion)', DIRECT_DV_LABEL, ''],
-  ['NC Diminished Value - Appraisal Clause (1st or 3rd party, $299)', NC_DV_AC_LABEL, ''],
+  ['NC Diminished Value - Appraisal Clause (1st or 3rd party, $399)', NC_DV_AC_LABEL, ''],
   ['Total Loss Appraisal Clause (own insurance)',               'Insurance Total Loss ACV Dispute',                        '1st Party'],
   ['Other 1st-party appraisal clause dispute',                  '1st-Party Policy Appraisal Clause Dispute',               '1st Party'],
   ['Estate / Probate / Divorce (FMV)',                          'Estate / Probate / Tax / Divorce Fair Market Value (FMV)', ''],
@@ -2800,7 +2800,7 @@ function sendFinalPhaseCore_(activeRow, ui) {
   updateOfferDocAmount(folderUrl, offerAmount);
 
   if (isDirectDV_(intendedUse)) return ui.alert('This is a Direct (no-insurer) Diminished Value appraisal - there is no insurance offer or Step 8. Use Step 6 to send the $299 invoice once the appraisal is finished.');
-  if (isAppraisalClauseDV_(intendedUse)) return ui.alert('This is an Appraisal Clause Diminished Value appraisal - it is billed like Total Loss. Use Step 6 to send the $299 invoice (before delivery); there is no Step 8 / second invoice.');
+  if (isAppraisalClauseDV_(intendedUse)) return ui.alert('This is an Appraisal Clause Diminished Value appraisal - it is billed like Total Loss. Use Step 6 to send the $399 invoice (before delivery); there is no Step 8 / second invoice.');
   if (isInsurerDV_(intendedUse)) {
     const signingLink = `${WEBSITE_SIGNING_URL}?row=${activeRow}&type=offer`;
 
@@ -3448,7 +3448,7 @@ const WAVE_KINDS = {
   DV_RETAINER: { all: ['diminished'], any: ['retainer', 'initial', 'intake', 'down', 'deposit'], none: ['final', 'balance', 'remaining', 'deferred', 'direct', 'no insurer', 'appraisal clause'], fallbackPrice: 199 },
   DV_FINAL:    { all: ['diminished'], any: ['final', 'balance', 'remaining', 'deferred'], none: ['retainer', 'initial', 'intake', 'down', 'deposit', 'direct', 'no insurer', 'appraisal clause'], fallbackPrice: 299 },
   DV_DIRECT:   { all: ['diminished'], any: ['direct', 'no insurer', 'without insurer', 'no insurance'], none: ['retainer', 'initial', 'intake', 'down', 'deposit', 'balance', 'remaining', 'deferred', 'appraisal clause'], fallbackPrice: 299 },
-  DV_APPRAISAL_CLAUSE: { all: ['diminished', 'appraisal clause'], any: [], none: ['retainer', 'initial', 'intake', 'down', 'deposit', 'balance', 'remaining', 'deferred', 'direct', 'no insurer'], fallbackPrice: 299 },
+  DV_APPRAISAL_CLAUSE: { all: ['diminished', 'appraisal clause'], any: [], none: ['retainer', 'initial', 'intake', 'down', 'deposit', 'balance', 'remaining', 'deferred', 'direct', 'no insurer'], fallbackPrice: 399 },
   TOTAL_LOSS:  { all: ['total loss'], any: [], none: ['diminished'], fallbackPrice: 299 },
   STANDARD:    { all: [], any: ['estate', 'probate', 'bank', 'collateral', 'irs', 'donation', 'divorce', 'fair market', 'fmv', 'standard'], none: ['diminished', 'total loss'], fallbackPrice: 299 }
 };
@@ -4062,7 +4062,7 @@ function saveSampleReport(name, mime, b64) {
 const PROSPECT_TYPES = [
   { key: 'dv',   label: 'Diminished Value - with insurer ($199 to start, $299 after the offer)', page: '/diminished-value.html' },
   { key: 'tl',   label: 'Total Loss - Policy Appraisal Clause ($299)', page: '/total-loss-appraisal.html' },
-  { key: 'ncdv', label: 'North Carolina Diminished Value - Policy Appraisal Clause ($299)', page: '/diminished-value.html' },
+  { key: 'ncdv', label: 'North Carolina Diminished Value - Policy Appraisal Clause ($399)', page: '/diminished-value.html' },
   { key: 'dir',  label: 'Diminished Value - no insurer ($299, paid after I finish)', page: '/diminished-value.html' },
   { key: 'gen',  label: 'General follow-up (no pricing)', page: '' }
 ];
@@ -4070,18 +4070,19 @@ const PROSPECT_TYPES = [
 function prospectDescription_(key) {
   const ac = 'In that process my appraisal and the insurer\'s appraiser\'s appraisal are written independently, and we then try to meet at a fair valuation. More often than not mine is on the higher end and theirs on the lower end, and we meet somewhere in the middle through discussion. If we cannot agree, an umpire (a 3rd appraiser) is hired, and if any 2 of the 3 appraisers agree, that is the binding valuation. The umpire\'s cost is split 50/50 between you and the insurer and typically adds roughly $300 extra to your side (roughly $600 total). It is not usually necessary.';
   const acSteps = [
-    'Next steps: let me know you would like to proceed and I will draft the intake agreement for you to e-sign, which allows me to be your hired appraiser and speak to the other party about your claim. Within 2-3 business days of the signed form you will receive a $299 invoice from our payment processor, Wave. Once it is paid, the appraisal is delivered within an hour. (That part is automated, so if you do not receive it within a couple of hours, just let me know and I will get it over to you right away.)',
+    'Next steps: let me know you would like to proceed and I will draft the intake agreement for you to e-sign, which allows me to be your hired appraiser and speak to the other party about your claim. Within 2-3 business days of the signed form you will receive a $PRICE invoice from our payment processor, Wave. Once it is paid, the appraisal is delivered within an hour. (That part is automated, so if you do not receive it within a couple of hours, just let me know and I will get it over to you right away.)',
     'I will not proceed with the other appraiser until you review the report and give me the OK. After that, the process typically takes roughly 1-2 weeks, or 3-4 weeks if an umpire is needed. Once an agreement is reached you will receive the "Award Letter", which is the binding value, and you can move forward with the insurer for payment.'];
+  const acStepsFor = function (price) { return acSteps.map(function (t) { return t.replace('$PRICE', price); }); };
   if (key === 'dv') return [
     'Our diminished value fee structure is $199 up front and $299 at the time of the insurer\'s offer. We draft the demand letter to the insurer, set our calendar to follow up with them, answer any pushback they have, and do everything in our power to receive an offer that matches our appraised valuation.',
     'Our Guarantee: if the insurer\'s offer does not at least cover our fee, the fee will be refunded and you will have the Certified Appraisal for free to use in next steps (typically small claims) to recover the diminished value.',
     'Our appraisals are completed and delivered within 2-3 business days, and once you give us the OK to proceed after reviewing the appraisal, we send the demand letter and begin the Diminished Value process.'];
   if (key === 'tl') return [
     'Since you and your insurer disagree on the value of the total loss, your policy\'s Appraisal Clause is the route I would recommend. ' + ac,
-    'The fee is $299, with no additional charge unless an umpire is needed.'].concat(acSteps);
+    'The fee is $299, with no additional charge unless an umpire is needed.'].concat(acStepsFor('$299'));
   if (key === 'ncdv') return [
     'The process is different in North Carolina than in most other states, which is why I want to lay it out. Your policy\'s Appraisal Clause can be used for diminished value. ' + ac,
-    'For Appraisal Clause Diminished Value our fee is the normal appraisal price of $299 rather than the $498 diminished value fee. We cannot offer the money-back guarantee on Appraisal Clause DV like we do on normal DV, because the number agreed to with the other appraiser is binding and our compensation has to stay independent of the result.'].concat(acSteps);
+    'For Appraisal Clause Diminished Value our fee is a flat $399 rather than the $498 diminished value fee. We cannot offer the money-back guarantee on Appraisal Clause DV like we do on normal DV, because the number agreed to with the other appraiser is binding and our compensation has to stay independent of the result.'].concat(acStepsFor('$399'));
   if (key === 'dir') return [
     'For a diminished value appraisal that does not involve an insurance company, I prepare a certified ASCAA appraisal of your vehicle\'s diminished value that you can use however you need.',
     'The fee is $299, and you pay only after I have finished the appraisal. The finished report is emailed to you as soon as the invoice is paid.'];
@@ -4324,7 +4325,7 @@ function showHowToGuide() {
     { type: "step", text: "[Auto] = happens by itself. [You] = your work. [Approve] = you get an email with a preview and one button." },
     { type: "step", text: "ALL TYPES, START: A new client arrives from the website, portal, or \ud83d\ude97 Appraisals \u2192 \u2795 New Client Entry. [Auto] For manual entries with a valid type, the folder and documents are built. [Approve] Send the intake / signing link (insurer DV also gets the $199 retainer). Client e-signs." },
     { type: "step", text: "INSURER DIMINISHED VALUE: [You] Do the appraisal and compile the final PDF. [Auto] Once the $199 retainer is paid, the report is emailed with an OK-to-Proceed button. Client clicks OK. [Approve] The demand letter goes to the adjuster, then you get a certified-mail reminder with a printable label. [Auto] Follow-up emails to the insurer are drafted for you every few business days. [You] When an offer arrives, type it in the Offer Amount column. [Approve] Final offer link and $299 invoice go out." },
-    { type: "step", text: "APPRAISAL CLAUSE (TOTAL LOSS or NC DIMINISHED VALUE, $299): [You] Do the appraisal, compile the final PDF. [Approve] The $299 invoice. [Auto] When it is paid, the report is emailed with an OK-to-Proceed button. Client clicks OK. [Approve] The notice of appraisal clause invocation goes to the carrier, plus the certified-mail reminder. [You] When the carrier names an appraiser and you agree on a value, fill in the Carrier Appraiser name, email, company and the Agreed Award Value. [Approve] The award letter is sent to the carrier appraiser to e-sign. [Auto] The signed award is emailed to the appraiser, the client, and the adjuster." },
+    { type: "step", text: "APPRAISAL CLAUSE (TOTAL LOSS $299, NC DIMINISHED VALUE $399): [You] Do the appraisal, compile the final PDF. [Approve] The invoice. [Auto] When it is paid, the report is emailed with an OK-to-Proceed button. Client clicks OK. [Approve] The notice of appraisal clause invocation goes to the carrier, plus the certified-mail reminder. [You] When the carrier names an appraiser and you agree on a value, fill in the Carrier Appraiser name, email, company and the Agreed Award Value. [Approve] The award letter is sent to the carrier appraiser to e-sign. [Auto] The signed award is emailed to the appraiser, the client, and the adjuster." },
     { type: "step", text: "TOTAL LOSS / ESTATE / BANK / IRS / OTHER: [You] Do the appraisal, compile the final PDF. [Approve] The invoice. [Auto] The report is emailed the moment it is paid." },
     { type: "step", text: "NO-INSURER DIMINISHED VALUE ($299, no intake): [You] Do the appraisal, compile the final PDF. [Approve] The $299 invoice. [Auto] The report is emailed when it is paid." },
     { type: "blank", text: "" },
@@ -4352,7 +4353,7 @@ function showHowToGuide() {
     { type: "step", text: "1. \u2699\ufe0f Setup \u2192 \u26a1 Turn on ALL automations." },
     { type: "step", text: "2. \u2699\ufe0f Setup \u2192 Set up main sheet headers & dropdowns (adds the new columns and the claim-type dropdown)." },
     { type: "step", text: "3. Upload the NC DV Appraisal Clause documents (intake, report, notice, award) and the updated \"5. Appraisal Award Document\" to the Drive folder \"New Templates\", then run Install NC appraisal clause DV templates and Install new document templates." },
-    { type: "step", text: "4. In Wave, make sure the invoice products exist ($199 DV retainer, $299 DV final, $299 direct DV, $299 appraisal clause DV, $299 total loss / standard)." },
+    { type: "step", text: "4. In Wave, make sure the invoice products exist ($199 DV retainer, $299 DV final, $299 direct DV, $399 appraisal clause DV, $299 total loss / standard)." },
     { type: "step", text: "5. Deploy a new version of the web app (Deploy \u2192 Manage deployments \u2192 Edit \u2192 New version) so the confirm, approve and e-sign links work." },
     { type: "step", text: "6. Upload your sample report." },
     { type: "blank", text: "" },
