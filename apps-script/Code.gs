@@ -4188,6 +4188,26 @@ function vehicleFromRow_(d) {   // d = row values (0-based): year 15, make 17, m
   return [d[15], d[17], d[18]].filter(function(x) { return x !== '' && x !== null && x !== undefined; }).join(' ');
 }
 
+// Google review request: plain draft that suggests mentioning the vehicle and insurer. Reviewed before sending.
+function reviewAskDraft_(d) {
+  const first = String(d[0] || '').trim().split(/\s+/)[0] || '';
+  const veh = vehicleFromRow_(d);
+  const carrier = String(d[7] || '').trim();
+  const eg = [veh, carrier ? carrier + ' claim' : ''].filter(String).join(', ');
+  const link = String(PropertiesService.getScriptProperties().getProperty('GOOGLE_REVIEW_URL') || '').trim();
+  return {
+    link: link,
+    subject: 'Thank you from Estimate Consultants',
+    body: 'Hi' + (first ? ' ' + first : '') + ',\n\nThank you for trusting us' + (veh ? ' with your ' + veh : '') + '. If you have a minute, a Google review would help other people find us:\n\n[review link]\n\n' +
+      'If you\'re comfortable, it helps to mention your vehicle and insurance company' + (eg ? ' (for example, "' + eg + '")' : '') + '. Please leave out claim numbers and personal details.\n\nThank you,\nKevin Murty\nEstimate Consultants\n' + OWNER_PHONE
+  };
+}
+function reviewAskedOn_(email) {
+  const e = String(email || '').trim().toLowerCase();
+  if (e.indexOf('@') < 1) return '';
+  return String(PropertiesService.getScriptProperties().getProperty('REVIEW_ASKED_' + e) || '');
+}
+
 function sendFinalPdfIfAvailable(folderUrl, clientEmail, info) {
   if (!folderUrl) return false;
   const folderIdMatch = folderUrl.match(/folders\/([a-zA-Z0-9-_]+)/);
@@ -7886,6 +7906,8 @@ function getActionsForRow(row) {
   if (insDV) add('offer', 'Finish the appraisal', 'Send final offer link + $299 invoice', 'Emails the client the insurer\'s offer to e-sign and sends the $299 final invoice through Wave.', { send: true, why: !(parseFloat(String(d[32]).replace(/[^0-9.]/g, '')) > 0) ? 'Enter the insurer offer amount (Claim & Carrier tab) first.' : '' });
   if (dv) add('deliver', 'Deliver', 'Send appraisal to the client', 'Emails the finished appraisal PDF with the Approve & Proceed button. Diminished value clients do not pay at this stage.', { send: true, why: !hasPdf ? 'Compile the final PDF first.' : '' });
   else add('markpaid', 'Deliver', 'Mark paid & send report', 'Use when the client paid outside Wave (check, Zelle, cash) or Wave has not caught up. Records the payment note and emails the finished report. Normally the report goes out by itself when Wave shows the invoice paid.', { send: true, why: !hasPdf ? 'Compile the final PDF first.' : '' });
+  const rvAsked = reviewAskedOn_(d[4]);
+  add('reviewask', 'Deliver', 'Ask for a Google review', 'Emails the client a short thank-you with your Google review link and suggests mentioning their vehicle and insurance company. You review and edit the email first.', { send: true, why: !hasEmail ? 'Needs the client\'s email.' : (rvAsked ? 'Asked before on ' + rvAsked + '.' : '') });
   add('demand', 'Adjuster & mail', 'Send demand / notice to the adjuster', 'Emails the adjuster the demand or notice letter and the appraisal. You can edit the message and CC the vehicle owner. Then you get the certified-mail packet to mail.', { send: true, why: !String(d[12] || '').trim() ? 'Needs the adjuster\'s email (Claim & Carrier tab).' : (/Demand Emailed/.test(status) ? 'Already emailed to the adjuster.' : '') });
   if (!direct && !insDV && isAC) add('award', 'Adjuster & mail', 'Create & send award letter', 'Creates the award document with the agreed value. You open it to check or edit, then review the email (To, CC, subject, message) and choose whether to attach the PDF. The carrier\'s appraiser gets an e-sign link plus the PDF in case they would rather print and sign.', { send: true, why: !(parseFloat(String(d[COL_AWARD_ACV - 1]).replace(/[^0-9.]/g, '')) > 0) ? 'Enter the agreed value and appraiser email (Award Letter tab).' : '' });
   add('mailedletter', 'Adjuster & mail', 'Certified mail letter (edit / print)', 'Makes the MAILED version of the demand letter for the envelope. It has the same wording as the emailed demand, but instead of enclosing the appraisal it says the appraisal was emailed and to refer to that email. Only this letter goes in the mail. You can edit it before printing. Nothing is sent.', { why: !String(d[111] || '').trim() ? 'Tip: add the carrier mailing address first (Claim & Carrier tab).' : '' });
@@ -8009,6 +8031,19 @@ function prepareAction(row, key) {
     if (!lf) P.warnings.push('No client folder yet - create the folder & documents first.');
     else P.docs = [{ label: 'Certified mail letter - click to open and EDIT', name: lf.getName(), url: lf.getUrl() }];
     if (!String(d[111] || '').trim()) P.warnings.push('No carrier mailing address on file - add it, then delete the letter and reopen this to rebuild it.');
+  } else if (key === 'reviewask') {
+    const dr = reviewAskDraft_(d);
+    P.title = 'Ask for a Google review'; P.confirm = 'Send to client';
+    P.intro = 'Emails ' + name + ' a short thank-you with your Google review link. Edit anything you like. Ask every client the same way (Google does not allow offering anything in return for a review).';
+    if (!email) P.warnings.push('No client email on file.');
+    const asked = reviewAskedOn_(email); if (asked) P.warnings.push('You already asked this client on ' + asked + '. Sending again emails them a second request.');
+    if (!dr.link) P.warnings.push('Paste your Google review link below once (from your Business Profile: "Ask for reviews"). It is saved for next time.');
+    F('rv_link', 'Your Google review link (saved for next time)', 'text', dr.link);
+    F('h_rv', 'Email to the client', 'h');
+    F('rv_to', 'To', 'static', name + ' <' + email + '>');
+    F('rv_cc', 'CC (optional)', 'text', '');
+    F('rv_subject', 'Subject', 'text', dr.subject);
+    F('rv_body', 'Message ([review link] is replaced with your link)', 'area', dr.body);
   } else if (key === 'tracking') {
     P.title = 'Certified mail tracking number'; P.confirm = 'Save tracking number';
     P.intro = 'Enter the tracking number from the receipt after you mail the packet. Saved on this file; the status becomes "Demand Emailed + Certified Mail Sent". Nothing is sent.';
@@ -8105,6 +8140,22 @@ function runAction(row, key, v) {
       const old = dest.getFilesByName(nm); while (old.hasNext()) old.next().setTrashed(true);
       const out = dest.createFile(lf.getAs(MimeType.PDF).setName(nm));
       return { ok: true, msg: 'Built from the letter as it is right now. Open it and print it for the envelope.', links: [{ label: nm, url: out.getUrl() }] };
+    }
+    if (key === 'reviewask') {
+      if (email.indexOf('@') < 1) return { ok: false, msg: 'No client email on file.' };
+      const link = String(v.rv_link || '').trim();
+      if (!/^https?:\/\//i.test(link)) return { ok: false, msg: 'Paste your Google review link (it starts with https://).' };
+      PropertiesService.getScriptProperties().setProperty('GOOGLE_REVIEW_URL', link);
+      const dr = reviewAskDraft_(d);
+      let body = String(v.rv_body || '').trim() ? String(v.rv_body) : dr.body;
+      body = body.split('[review link]').join(link);
+      if (body.indexOf(link) < 0) body += '\n\n' + link;
+      const opts = { name: 'Kevin Murty - Estimate Consultants', replyTo: ADMIN_NOTIFICATION_EMAIL };
+      if (v.rv_cc && String(v.rv_cc).trim()) opts.cc = String(v.rv_cc).trim();
+      GmailApp.sendEmail(email, String(v.rv_subject || '').trim() || dr.subject, body, opts);
+      const stamp = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'MMM d, yyyy');
+      PropertiesService.getScriptProperties().setProperty('REVIEW_ASKED_' + email.trim().toLowerCase(), stamp);
+      return { ok: true, msg: 'Review request emailed to ' + name + ' (' + email + ').' };
     }
     if (key === 'tracking') {
       const t = String(v.trk || '').replace(/\s+/g, ' ').trim();
