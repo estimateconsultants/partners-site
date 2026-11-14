@@ -46,7 +46,7 @@
     </div>
     <ol class="steps">
       <li><span class="num">01</span><h3>Choose your code</h3><p>Create a promo code for your firm in under a minute. No account needed to start.</p></li>
-      <li><span class="num">02</span><h3>Your clients save 15%</h3><p>Print your personalized flyer for clients. Anyone who enters your code saves 15% on our services.</p></li>
+      <li><span class="num">02</span><h3>Your clients save 15%</h3><p>Print your personalized flyer, or add our free diminished value calculator to your website. Anyone who uses your code saves 15% on our services.</p></li>
       <li><span class="num">03</span><h3>Your team earns $50</h3><p>Every time a client uses your code and receives an appraisal, we send $50 to whoever referred them.</p></li>
     </ol>
 
@@ -205,6 +205,12 @@
           <button class="btn btn-gold wide" type="button" id="dashFlyer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M7 14h10v7H7z"/></svg>Preview &amp; print</button>
         </div>
 
+        <div class="card block flyer-card">
+          <h2>Calculator for your website</h2>
+          <p>Put our free diminished value calculator on your firm's website. Clients who reach out through it are credited to your code.</p>
+          <button class="btn btn-outline wide" type="button" id="dashCalc">Get the website code</button>
+        </div>
+
         <div class="card block">
           <h2>Business cards</h2>
           <p class="muted" id="cardsNote">Running low? Request more and we'll ship them to your office.</p>
@@ -243,6 +249,26 @@
       </div>
     </div>
     <p class="fine center" style="margin:0 0 4px">Tip: choose "Save as PDF" in the print window to keep a digital copy. Print on US Letter at 100% scale.</p>
+  </div>
+</div>
+
+<div class="overlay" id="calcModal" hidden role="dialog" aria-modal="true" aria-labelledby="calcTitle">
+  <div class="modal">
+    <div class="modal-head"><div><p class="kicker">Partner tool</p><h2 id="calcTitle">Calculator for your website</h2></div><button class="x" type="button" data-close aria-label="Close">×</button></div>
+    <ol class="calc-steps">
+      <li>Copy the code below. Your partner code is already in it.</li>
+      <li>Paste it into your website with your site builder's "HTML" or "Embed code" block (WordPress, Wix, Squarespace and GoDaddy all have one).</li>
+      <li>Clients who text or email us from the calculator are credited to your code.</li>
+    </ol>
+    <pre class="calc-code" id="calcCode"></pre>
+    <div class="modal-foot">
+      <a class="link" id="calcPreview" href="#" target="_blank" rel="noopener">Preview the calculator</a>
+      <div class="modal-actions">
+        <button class="btn btn-outline" type="button" data-close>Close</button>
+        <button class="btn btn-gold" type="button" id="copyCalc">Copy code</button>
+      </div>
+    </div>
+    <p class="fine center" style="margin:0 0 4px">Need help adding it? Call or text 910-333-6001.</p>
   </div>
 </div>
 

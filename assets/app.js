@@ -278,6 +278,25 @@
       .then(function () { b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy"; }, 1600); });
   };
   $("dashFlyer").onclick = function () { if (state.me) openFlyer(state.me.profile.firm, state.me.profile.code); };
+  function calcSnippet(code) {
+    var src = "https://www.estimateconsultants.com/embed/dv-calculator.html?ref=" + encodeURIComponent(code);
+    return '<iframe id="ec-dv-calc" src="' + src + '" title="Free diminished value calculator" width="100%" height="1150" style="border:0;max-width:620px;display:block;margin:0 auto" loading="lazy"></iframe>\n' +
+      '<p style="text-align:center;font-size:13px">Free diminished value calculator by <a href="https://www.estimateconsultants.com/diminished-value-calculator.html">Estimate Consultants</a></p>\n' +
+      "<script>window.addEventListener('message',function(e){if(e.origin==='https://www.estimateconsultants.com'&&e.data&&e.data.type==='ec-calc-height'){document.getElementById('ec-dv-calc').style.height=(e.data.height+20)+'px'}});</" + "script>";
+  }
+  $("dashCalc").onclick = function () {
+    if (!state.me) return;
+    var code = state.me.profile.code;
+    $("calcCode").textContent = calcSnippet(code);
+    $("calcPreview").href = "https://www.estimateconsultants.com/embed/dv-calculator.html?ref=" + encodeURIComponent(code);
+    $("copyCalc").textContent = "Copy code";
+    openModal("calcModal");
+  };
+  $("copyCalc").onclick = function () {
+    var c = $("calcCode").textContent, b = this;
+    (navigator.clipboard ? navigator.clipboard.writeText(c) : Promise.reject()).catch(function () { var t = document.createElement("textarea"); t.value = c; document.body.appendChild(t); t.select(); try { document.execCommand("copy"); } catch (e) {} t.remove(); })
+      .then(function () { b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy code"; }, 1600); });
+  };
 
   /* ===== modals ===== */
   var lastFocus = null;

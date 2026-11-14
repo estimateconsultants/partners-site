@@ -335,3 +335,7 @@ select.sel:focus{outline:none;border-color:var(--gold-d);box-shadow:0 0 0 4px rg
 
 .muted{color:var(--muted);font-size:14px;margin:6px 0 14px}
 .seg.seg3{grid-template-columns:repeat(3,1fr)}
+
+.calc-steps{margin:4px 0 14px;padding-left:20px;color:var(--muted);font-size:14px;line-height:1.55}
+.calc-steps li{margin:4px 0}
+.calc-code{background:#17130B;color:#F2F0EA;border-radius:12px;padding:14px;font-size:11.5px;line-height:1.5;white-space:pre-wrap;word-break:break-all;max-height:220px;overflow:auto;margin:0 0 12px}
