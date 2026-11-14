@@ -278,6 +278,7 @@
       .then(function () { b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy"; }, 1600); });
   };
   $("dashFlyer").onclick = function () { if (state.me) openFlyer(state.me.profile.firm, state.me.profile.code); };
+  $("dashChecklist").onclick = function () { if (state.me) openFlyer(state.me.profile.firm, state.me.profile.code, "checklist"); };
   function calcSnippet(code) {
     var src = "https://www.estimateconsultants.com/embed/dv-calculator.html?ref=" + encodeURIComponent(code);
     return '<iframe id="ec-dv-calc" src="' + src + '" title="Free diminished value calculator" width="100%" height="1150" style="border:0;max-width:620px;display:block;margin:0 auto" loading="lazy"></iframe>\n' +
@@ -381,25 +382,46 @@
       "</div>" +
       '<div class="fl-foot"><span>' + PHONE + "</span><span>" + EMAIL + "</span><span>estimateconsultants.com</span></div></div>";
   }
+  function checklistHtml(firm, code, withQr) {
+    var qr = withQr ? '<div class="fl-qr">' + window.EC_QR.svg(MAIN_SITE, { dark: "#17181B", light: "#FFFFFF", margin: 1, label: "QR code to estimateconsultants.com" }) + "<span>SCAN TO START</span></div>" : "";
+    var box = function (b, t) { return '<li><span class="ck-box"></span><div><b>' + b + "</b>" + (t ? "<span>" + t + "</span>" : "") + "</div></li>"; };
+    return '<div class="flyer">' +
+      '<div class="fl-top"><div class="fl-brandrow"><div class="fl-brand"><span class="lockup"><span class="lk-top">Estimate</span><span class="lk-bot">Consultants</span></span></div><div class="fl-tag">INDEPENDENT VEHICLE APPRAISERS<br>ASCAA-CERTIFIED · LICENSED</div></div><div class="fl-rule"></div>' +
+      '<div class="fl-by">COMPLIMENTS OF</div><div class="fl-firm" data-fit="40,22,720">' + esc(firm) + "</div>" +
+      '<div class="fl-head">After a crash: <em>your vehicle checklist</em></div></div>' +
+      '<div class="fl-body ck-body"><div class="ck-cols">' +
+      '<div><h3 class="ck-h">At the scene</h3><ul class="ck">' +
+      box("Get safe and call 911 if anyone is hurt") + box("Photograph all vehicles, the scene and damage", "Wide shots and close-ups, from every side.") + box("Exchange information", "Names, phone, insurance company and policy number, plate.") + box("Get the police report number") + box("Write down witnesses", "Names and phone numbers.") +
+      '</ul><h3 class="ck-h">In the first few days</h3><ul class="ck">' +
+      box("Report the claim to the insurers", "Yours and the other driver\'s. Write down each claim number.") + box("Keep every receipt", "Towing, rental, storage, repairs.") + box("Ask for the repair estimate in writing") +
+      '</ul></div><div><h3 class="ck-h">Before you sign anything</h3><ul class="ck">' +
+      box("Don\'t sign a release for all property damage too early", "It can end your diminished value claim.") + box("Not your fault? Ask about diminished value", "A repaired car with accident history is worth less. In most states the at-fault insurer owes that loss.") + box("Totaled? Ask for the valuation report", "Check the comparables, trim, options and mileage.") + box("Offer too low? Check your policy\'s appraisal clause", "It lets you dispute your own insurer\'s number.") + box("Save the final repair invoice") +
+      '</ul><h3 class="ck-h">Notes</h3><div class="ck-notes"><span>Police report #</span><span>My claim #</span><span>Other driver\'s claim #</span><span>Adjuster &amp; phone</span></div></div></div>' +
+      '<div class="ck-code"><div><div class="fl-codelbl">YOUR PARTNER CODE · 15% OFF OUR SERVICES</div><div class="fl-codeval" data-fit="56,28,600">' + esc(code) + '</div><div class="ck-how">Questions about your vehicle\'s value or the insurance offer? Call <b>' + PHONE + '</b> or start at estimateconsultants.com and enter this code.</div></div>' + qr + "</div>" +
+      "</div>" +
+      "</div></div>" +
+      '<div class="fl-foot"><span>' + PHONE + "</span><span>" + EMAIL + "</span><span>estimateconsultants.com</span></div></div>";
+  }
+  function docHtml(c, withQr) { return c.kind === "checklist" ? checklistHtml(c.firm, c.code, withQr) : flyerHtml(c.firm, c.code, withQr); }
   function fitFlyer(root) { $$("[data-fit]", root).forEach(function (el) { var a = el.dataset.fit.split(",").map(Number); fit(el, a[0], a[1], a[2]); }); }
   function renderFlyerPreview() {
     if (!flyerCtx) return;
     var scale = $("flyerScale"), stage = $("flyerStage");
     var availW = Math.max(240, stage.clientWidth - 36), availH = Math.max(320, window.innerHeight * 0.58);
     var k = Math.min(1, availW / 816, availH / 1056);
-    scale.innerHTML = '<div class="flyer-inner" style="transform:scale(' + k + ')">' + flyerHtml(flyerCtx.firm, flyerCtx.code, $("optQr").checked) + "</div>";
+    scale.innerHTML = '<div class="flyer-inner" style="transform:scale(' + k + ')">' + docHtml(flyerCtx, $("optQr").checked) + "</div>";
     scale.style.width = Math.round(816 * k) + "px"; scale.style.height = Math.round(1056 * k) + "px"; stage.style.height = "";
     var run = function () { fitFlyer(scale); }; run(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
   }
-  function openFlyer(firm, code) { flyerCtx = { firm: firm, code: code }; openModal("flyerModal"); renderFlyerPreview(); setTimeout(renderFlyerPreview, 80); }
+  function openFlyer(firm, code, kind) { flyerCtx = { firm: firm, code: code, kind: kind || "flyer" }; var ck = flyerCtx.kind === "checklist"; $("flyerKicker").textContent = ck ? "After-a-crash checklist" : "Client flyer"; $("printBtn").querySelector("span").textContent = ck ? "Print checklist" : "Print flyer"; openModal("flyerModal"); renderFlyerPreview(); setTimeout(renderFlyerPreview, 80); }
   $("optQr").addEventListener("change", renderFlyerPreview);
   window.addEventListener("resize", function () { if (!$("flyerModal").hidden) renderFlyerPreview(); });
   $("printBtn").onclick = function () {
     if (!flyerCtx) return; var b = this; b.classList.add("busy"); b.querySelector("span").textContent = "Preparing";
-    var root = $("printRoot"); root.innerHTML = flyerHtml(flyerCtx.firm, flyerCtx.code, $("optQr").checked); root.style.display = "block";
+    var root = $("printRoot"); root.innerHTML = docHtml(flyerCtx, $("optQr").checked); root.style.display = "block";
     var go = function () {
       fitFlyer(root); document.body.classList.add("printing");
-      var done = function () { document.body.classList.remove("printing"); root.style.display = ""; root.innerHTML = ""; b.classList.remove("busy"); b.querySelector("span").textContent = "Print flyer"; window.removeEventListener("afterprint", done); };
+      var done = function () { document.body.classList.remove("printing"); root.style.display = ""; root.innerHTML = ""; b.classList.remove("busy"); b.querySelector("span").textContent = flyerCtx && flyerCtx.kind === "checklist" ? "Print checklist" : "Print flyer"; window.removeEventListener("afterprint", done); };
       window.addEventListener("afterprint", done);
       setTimeout(function () { window.print(); if (!("onafterprint" in window)) done(); }, 250);
     };
