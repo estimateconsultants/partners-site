@@ -7,7 +7,7 @@
   var API = "https://script.google.com/macros/s/AKfycbw9irQ5WbSoTcrPq8d4EU7L0U0pF3XJ-akfX7SS1LvdYOohEtF6-d_967_T-UEhsgrK/exec";
   var MAIN_SITE = "https://estimateconsultants.com";
   var PHONE = "910-333-6001", EMAIL = "kevin@estimateconsultants.com";
-  var PRICES = { dvRetainer: 199, dvAfter: 299, tl: 299, off: 0.15 };
+  var PRICES = { dvRetainer: 299, dvAfter: 199, tl: 299, off: 0.15 };
 
   /* ===== helpers ===== */
   var $ = function (id) { return document.getElementById(id); };
