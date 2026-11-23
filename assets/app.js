@@ -288,8 +288,28 @@
   $("dashCalc").onclick = function () {
     if (!state.me) return;
     var code = state.me.profile.code;
+    $("calcTitle").textContent = "Calculator for your website";
+    $("calcCredit").textContent = "Clients who text or email us from the calculator are credited to your code.";
+    $("calcPreview").textContent = "Preview the calculator";
     $("calcCode").textContent = calcSnippet(code);
     $("calcPreview").href = "https://www.estimateconsultants.com/embed/dv-calculator.html?ref=" + encodeURIComponent(code);
+    $("copyCalc").textContent = "Copy code";
+    openModal("calcModal");
+  };
+  function mtSnippet(code) {
+    var src = "https://www.estimateconsultants.com/embed/markettrue.html?ref=" + encodeURIComponent(code);
+    return '<iframe id="ec-mt" src="' + src + '" title="Free car value by VIN" width="100%" height="1100" style="border:0;max-width:680px;display:block;margin:0 auto" loading="lazy"></iframe>\n' +
+      '<p style="text-align:center;font-size:13px">Free car value by VIN: <a href="https://www.estimateconsultants.com/markettrue-value.html">MarketTrue Value</a> by Estimate Consultants</p>\n' +
+      "<script>window.addEventListener('message',function(e){if(e.origin==='https://www.estimateconsultants.com'&&e.data&&e.data.type==='ec-mt-height'){document.getElementById('ec-mt').style.height=(e.data.height+20)+'px'}});</" + "script>";
+  }
+  $("dashMt").onclick = function () {
+    if (!state.me) return;
+    var code = state.me.profile.code;
+    $("calcTitle").textContent = "MarketTrue Value for your website";
+    $("calcCredit").textContent = "Customers who look up their car through it are credited to your code.";
+    $("calcCode").textContent = mtSnippet(code);
+    $("calcPreview").href = "https://www.estimateconsultants.com/embed/markettrue.html?ref=" + encodeURIComponent(code);
+    $("calcPreview").textContent = "Preview MarketTrue Value";
     $("copyCalc").textContent = "Copy code";
     openModal("calcModal");
   };
