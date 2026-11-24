@@ -218,6 +218,8 @@
   }
   function renderDash(r) {
     var p = r.profile, s = r.stats;
+    var share = "https://www.estimateconsultants.com/markettrue-value.html?ref=" + encodeURIComponent(p.code);
+    if ($("shareLink")) { $("shareLink").value = share; $("shareQr").innerHTML = window.EC_QR.svg(share, { dark: "#17181B", light: "#FFFFFF", margin: 1, label: "QR code for the free offer check" }); }
     $("dashTitle").textContent = p.firm; $("dashCode").textContent = p.code; $("dashSince").textContent = "Preferred Partner" + (p.since ? " since " + p.since : "");
     countUp($("stSubmitted"), s.submitted, function (v) { return Math.round(v); });
     countUp($("stAppraisals"), s.appraisals, function (v) { return Math.round(v); });
@@ -276,6 +278,18 @@
     var c = $("dashCode").textContent, b = this;
     (navigator.clipboard ? navigator.clipboard.writeText(c) : Promise.reject()).catch(function () { var t = document.createElement("textarea"); t.value = c; document.body.appendChild(t); t.select(); try { document.execCommand("copy"); } catch (e) {} t.remove(); })
       .then(function () { b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy"; }, 1600); });
+  };
+  if ($("copyShare")) $("copyShare").onclick = function () {
+    var c = $("shareLink").value, b = this;
+    (navigator.clipboard ? navigator.clipboard.writeText(c) : Promise.reject()).catch(function () { $("shareLink").select(); try { document.execCommand("copy"); } catch (e) {} })
+      .then(function () { b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy"; }, 1600); });
+  };
+  if ($("printShare")) $("printShare").onclick = function () {
+    if (!state.me) return; var p = state.me.profile, link = $("shareLink").value, w = window.open("", "_blank"); if (!w) return;
+    w.document.write('<!doctype html><title>Free offer check</title><style>body{font-family:Arial,sans-serif;margin:0;display:flex;justify-content:center}.c{width:4in;border:2px solid #17181B;border-radius:16px;padding:22px;margin:30px;text-align:center}h1{font-size:22px;margin:0 0 6px}p{font-size:14px;margin:6px 0}svg{width:2.2in;height:2.2in}@media print{.c{margin:0}}</style>' +
+      '<div class="c"><h1>Car totaled?</h1><p>Scan to see your car&rsquo;s market value free and check the insurance offer.</p>' + window.EC_QR.svg(link, { dark: "#17181B", light: "#FFFFFF", margin: 1 }) +
+      '<p><b>Estimate Consultants</b> &middot; estimateconsultants.com</p><p style="font-size:12px;color:#555">Courtesy of ' + esc(p.firm) + '</p></div><script>setTimeout(function(){print()},300)</' + 'script>');
+    w.document.close();
   };
   $("dashFlyer").onclick = function () { if (state.me) openFlyer(state.me.profile.firm, state.me.profile.code); };
   $("dashChecklist").onclick = function () { if (state.me) openFlyer(state.me.profile.firm, state.me.profile.code, "checklist"); };

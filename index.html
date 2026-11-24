@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Archivo:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="assets/style.css">
+<style>.share-row{display:flex;gap:8px;margin:10px 0}.share-row .inp{flex:1;min-width:0;font:inherit;font-size:13px;padding:10px 12px;border:1px solid #d9d4c7;border-radius:10px;background:#fff;color:#17181B}.share-qr{display:flex;justify-content:center;margin:8px 0 12px}.share-qr svg{width:150px;height:150px}</style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -216,6 +217,14 @@
           <h2>Calculator for your website</h2>
           <p>Put our free diminished value calculator on your firm's website. Clients who reach out through it are credited to your code.</p>
           <button class="btn btn-outline wide" type="button" id="dashCalc">Get the website code</button>
+        </div>
+
+        <div class="card block flyer-card">
+          <h2>Free offer check for your customers</h2>
+          <p>Text or email this link to anyone whose car was just totaled, or put the QR code at your counter. They see their car&rsquo;s market value free and can check the insurer&rsquo;s offer. Customers who use it are credited to your code.</p>
+          <div class="share-row"><input class="inp" id="shareLink" readonly aria-label="Your link"><button class="btn btn-gold" type="button" id="copyShare">Copy</button></div>
+          <div class="share-qr" id="shareQr"></div>
+          <button class="btn btn-outline wide" type="button" id="printShare">Print the QR card</button>
         </div>
 
         <div class="card block flyer-card">
