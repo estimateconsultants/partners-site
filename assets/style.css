@@ -370,3 +370,96 @@ body.no-pay .stats{grid-template-columns:repeat(2,1fr)}
 @media (min-width:641px){body.no-pay .rrow{grid-template-columns:84px minmax(0,1.1fr) 170px}}
 body.no-pay .rrow .payto{display:none}
 @media (max-width:760px){.order-row{grid-template-columns:1fr}.order-links .btn{flex:1 1 100%;text-align:center}}
+
+/* ================= Current site look (dark, sage green; Inter Tight, Anton for the code) =================
+   Everything above was written for the older ivory and gold look. The colors are swapped here, and the printed
+   flyer and checklist keep their own paper colors (set back under .flyer at the end). */
+:root{
+  --ink:#eef2ef; --ink-2:#cdd6d0; --muted:#95a29b; --line:#38423d; --line-2:#262d2a;
+  --ivory:#0e1110; --paper:#161a18; --obsidian:#0e1110; --obs-2:#161a18; --obs-line:#262d2a;
+  --gold:#a9d8b4; --gold-d:#a9d8b4; --gold-dd:#c6e6cd; --sand:#1c211f;
+  --ok:#7fd69a; --ok-bg:rgba(127,214,154,.12); --warn:#f2d7a2; --warn-bg:rgba(242,215,162,.10); --bad:#f2a5a5;
+  --serif:'Inter Tight',Inter,system-ui,-apple-system,'Segoe UI',sans-serif;
+  --sans:'Inter Tight',Inter,system-ui,-apple-system,'Segoe UI',sans-serif;
+  --disp:Anton,'Arial Narrow',Impact,sans-serif;
+  --shadow:none;
+}
+html{background:#0e1110;color-scheme:dark}
+body{background:#0e1110 radial-gradient(1200px 520px at 50% -180px,rgba(127,214,154,.10),transparent 70%) no-repeat;color:var(--ink-2)}
+h1,h2,h3{font-weight:650;letter-spacing:-.02em;line-height:1.12;color:#fff}
+h1 em,h2 em,h3 em{font-style:normal;font-weight:650;color:var(--gold)}
+::selection{background:#a9d8b4;color:#0d1a12}
+.nav{background:rgba(14,17,16,.86);border-bottom:1px solid var(--line-2)}
+.lk-bot{color:#a9d8b4}
+/* buttons: squared, sage for the main action */
+.btn{--bg:#d9ecdc;--fg:#0d1a12;--bd:#d9ecdc;border-radius:10px;font-weight:700;min-height:50px;padding:0 22px}
+.btn:hover{box-shadow:0 10px 28px rgba(0,0,0,.35)}
+.btn-gold,.btn-dark{--bg:#d9ecdc;--fg:#0d1a12;--bd:#d9ecdc}
+.btn-gold:hover,.btn-dark:hover{--bg:#e7f4e9;--bd:#e7f4e9;color:#0d1a12}
+.btn-ghost,.btn-outline,.nav .btn-ghost{--bg:transparent;--fg:#fff;--bd:var(--line)}
+.btn-ghost:hover,.btn-outline:hover{--bg:rgba(255,255,255,.06);--bd:#56635c;color:#fff}
+.btn.sm{min-height:42px;padding:0 16px;font-size:14px;white-space:nowrap}
+.link{color:var(--gold)}
+/* home */
+.hero{background:transparent;padding:clamp(48px,8vw,96px) 20px clamp(28px,5vw,56px)}
+.hero h1{font-size:clamp(34px,5.6vw,60px);line-height:1.05;color:#fff;max-width:16em}
+.eyebrow,.kicker{color:var(--gold);letter-spacing:.14em}
+.lede{color:var(--ink-2)}.lede strong{color:#fff}
+.fine,.hero .fine{color:var(--muted)}
+.steps li{border-top:1px solid var(--line);padding-top:18px}
+.steps .num{font:400 26px/1 var(--disp);color:var(--gold)}
+.steps h3{font-size:20px;margin:12px 0 6px}
+.callout{border:1px solid var(--line-2);border-top:1px solid var(--line-2);border-radius:14px;grid-template-columns:1.6fr auto}
+.callout h3{font-size:22px}
+/* cards and forms */
+.card{border:1px solid var(--line-2);border-radius:14px;box-shadow:none}
+.wizard h1{font-size:clamp(26px,4vw,32px)}
+.field input,.field textarea,.otp input,select.sel,.inp,.suggest button,.payee{background-color:#1c211f;color:#fff;border-color:var(--line)}
+.field input:focus,.field textarea:focus,.otp input:focus,select.sel:focus{background-color:#1c211f;border-color:#a9d8b4;box-shadow:0 0 0 3px rgba(169,216,180,.18)}
+.otp input{font:400 28px var(--disp)}
+.suggest button{border-radius:10px}
+.payee.def{background:#1c211f;border-color:#a9d8b4}
+.ticket-preview,.ticket,.code-chip,.toast,.mico,.seal{background:#1c211f;border:1px solid var(--line);border-radius:12px;color:#fff}
+.ticket b,.ticket-preview b,.code-chip b{font-family:var(--disp);font-weight:400;letter-spacing:.06em}
+.chip-btn{border-radius:8px}
+.toast{border-radius:10px}
+.switch span{background:#38423d}
+.banner{border-color:rgba(242,215,162,.3)}
+.flyer-card{background:var(--paper)}
+.modal{border:1px solid var(--line-2);border-radius:14px}
+.modal-head h2{font-size:24px}
+.calc-code{background:#0e1110;border:1px solid var(--line-2)}
+.sk{background:linear-gradient(90deg,#161a18 25%,#1c211f 37%,#161a18 63%);background-size:400% 100%}
+.foot{border-top:1px solid var(--line-2);color:var(--muted)}
+.pill{border-radius:6px}
+.pill.submitted{background:#1c211f;color:var(--ink-2)}
+.pill.paid{background:var(--ok-bg);color:var(--ok)}
+.empty b{font-size:18px;color:#fff}
+/* account page: one column */
+.dash{max-width:760px}
+.dash-head h1{font-size:clamp(26px,4.4vw,34px)}
+.dash .card.block{margin-bottom:16px}
+.block h2{font-size:19px;margin-bottom:4px}
+.block .sub{color:var(--muted);font-size:14.5px;margin-bottom:16px}
+.block-head{align-items:center;margin-bottom:12px}
+.counts b{color:#fff;font-weight:700}
+.order{margin-bottom:16px}
+.order .fine{color:var(--muted)}
+.rows{border-top:1px solid var(--line-2)}
+.trow{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--line-2)}
+.trow b{display:block;color:#fff;font-weight:600;font-size:15px}
+.trow span{display:block;color:var(--muted);font-size:13.5px}
+.trow.wrap-row{flex-wrap:wrap}.trow.wrap-row .share-row{flex:1 1 100%;display:flex;gap:8px;margin:0}
+.trow.wrap-row .inp{flex:1;min-width:0;height:42px;border:1px solid var(--line);border-radius:10px;padding:0 12px;font:inherit;font-size:14px}
+.trow.last{border-bottom:0;border-top:1px solid var(--line-2);margin-top:14px;padding-bottom:0}
+.rows .trow:last-child{border-bottom:0;padding-bottom:0}
+.kv div{border-bottom-color:var(--line-2)}
+@media (max-width:640px){.trow{flex-wrap:wrap}.trow .btn.sm{flex:1 1 100%}.trow.wrap-row .share-row{flex-wrap:wrap}.trow.wrap-row .inp{flex:1 1 100%}.callout{grid-template-columns:1fr}}
+/* printed flyer and checklist: paper colors and their own type, as before */
+.flyer{--ink:#17181B;--ink-2:#3B3C40;--muted:#6B6C70;--line:#D9D5CB;--line-2:#E8E4DA;--ivory:#F5F3EE;--paper:#FFFFFF;--obsidian:#0B0B0C;--gold:#C5A46D;--gold-d:#7A5C26;--gold-dd:#4F3B18;--sand:#F1E8D6;
+  --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;--sans:'Archivo','Helvetica Neue',Arial,sans-serif;color:#17181B;font-family:var(--sans)}
+.flyer h1,.flyer h2,.flyer h3{font-family:var(--serif);font-weight:600;letter-spacing:-.005em;line-height:1.02;color:#17181B}
+.flyer h1 em,.flyer h2 em,.flyer h3 em{font-style:italic;font-weight:500;color:var(--gold-d)}
+.order-row{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr) auto}
+.inp{background:#1c211f!important;color:#fff!important}
+@media (max-width:760px){.order-row{grid-template-columns:1fr}}
