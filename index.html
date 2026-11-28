@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Archivo:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/style.css?v=2">
 <style>.share-row{display:flex;gap:8px;margin:10px 0}.share-row .inp{flex:1;min-width:0;font:inherit;font-size:13px;padding:10px 12px;border:1px solid #d9d4c7;border-radius:10px;background:#fff;color:#17181B}.share-qr{display:flex;justify-content:center;margin:8px 0 12px}.share-qr svg{width:150px;height:150px}</style>
 </head>
 <body>
@@ -49,22 +49,22 @@
     <ol class="steps">
       <li><span class="num">01</span><h3>Choose your code</h3><p>Create a promo code for your firm in under a minute. No account needed to start.</p></li>
       <li><span class="num">02</span><h3>Your clients save 15%</h3><p>Print your personalized flyer, or add our free diminished value calculator to your website. Anyone who uses your code saves 15% on our services.</p></li>
-      <li><span class="num">03</span><h3>Your team earns $50</h3><p>Every time a client uses your code and receives an appraisal, we send $50 to whoever referred them.</p></li>
+      <li><span class="num">03</span><h3>Order from your account</h3><p>Value a vehicle by VIN in about a minute, then order a certified appraisal or a Valuation Report for the file at 15% off.</p></li>
     </ol>
 
     <div class="duo">
       <div class="panel dark">
-        <div class="big-fifty">$50</div>
+        <div class="big-fifty">15%</div>
         <div>
-          <p class="kicker gold">Every referral</p>
-          <h3>A built-in staff bonus program</h3>
-          <p>Paid to whoever sent the client our way: intake specialist, case manager, paralegal, whoever. By PayPal, Venmo or check, with as many payees as you like.</p>
+          <p class="kicker gold">Professional accounts</p>
+          <h3>Off every report your office orders</h3>
+          <p>Certified appraisals and Valuation Reports for estate, divorce, injury and total loss files. Further discounts for offices that send files regularly.</p>
         </div>
       </div>
       <div class="panel light">
-        <p class="kicker">Or give it back</p>
-        <h3>Donate it to a charity</h3>
-        <p>Many of our partners have the $50 donated to a charity of their choosing. We provide proof of receipt for every donation.</p>
+        <p class="kicker">Free with your account</p>
+        <h3>A value in about a minute</h3>
+        <p>Enter a VIN and mileage to see our appraised value before you order anything.</p>
       </div>
     </div>
 
@@ -77,7 +77,7 @@
       <ul class="ticks">
         <li><b>Featured on our website</b><span>Listed as a Preferred Partner at estimateconsultants.com</span></li>
         <li><b>Recommended directly</b><span>Referred to clients who request legal representation</span></li>
-        <li><b>Track everything</b><span>See every referral and payment in your private dashboard</span></li>
+        <li><b>Track everything</b><span>See every file sent under your code in your private dashboard</span></li>
       </ul>
     </div>
 
@@ -131,7 +131,7 @@
           <button class="btn btn-gold wide" type="button" id="doneFlyer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M7 14h10v7H7z"/></svg>Print your client flyer</button>
           <button class="btn btn-outline wide" type="button" id="doneAccount">Finish setting up my account</button>
         </div>
-        <p class="fine">Your account lets you track referrals and choose where each $50 goes. We'll email a 6-digit code to confirm it's you. You can also do this later.</p>
+        <p class="fine">Your account lets you value a vehicle, order reports at 15% off and see the files sent under your code. We'll email a 6-digit code to confirm it's you. You can also do this later.</p>
       </div>
     </div>
   </div>
@@ -184,18 +184,39 @@
     <div class="stats" id="stats" aria-live="polite">
       <div class="stat"><span>Clients who used your code</span><b id="stSubmitted">0</b></div>
       <div class="stat"><span>Became appraisals</span><b id="stAppraisals">0</b></div>
-      <div class="stat gold"><span>On the way to you</span><b id="stOwed">$0</b><small id="stOwedN"></small></div>
-      <div class="stat"><span>Paid to date</span><b id="stPaid">$0</b><small id="stPaidN"></small></div>
+      <div class="stat gold pay-only"><span>On the way to you</span><b id="stOwed">$0</b><small id="stOwedN"></small></div>
+      <div class="stat pay-only"><span>Paid to date</span><b id="stPaid">$0</b><small id="stPaidN"></small></div>
+    </div>
+
+    <div class="card block order" id="orderCard">
+      <div class="block-head"><div><h2>Value a vehicle</h2><p>See our appraised value in about a minute, free. From there you can order a certified appraisal or a Valuation Report for the file. Your office gets 15% off both, with further discounts for volume.</p></div></div>
+      <form class="order-row" id="orderForm" novalidate>
+        <div class="field"><input id="oVin" maxlength="17" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder=" "><label for="oVin">VIN (17 characters)</label></div>
+        <select class="sel" id="oFor" aria-label="What the value is for">
+          <option value="general">Injury or total loss file</option>
+          <option value="estate">Estate or probate</option>
+          <option value="divorce">Divorce or settlement</option>
+          <option value="bank">Lender or collateral</option>
+          <option value="donation">Vehicle donation</option>
+        </select>
+        <button class="btn btn-gold" type="submit">Get the value</button>
+      </form>
+      <p class="err" id="oErr" role="alert"></p>
+      <div class="order-links">
+        <a class="btn btn-outline" id="oCert" href="https://appraisals.estimateconsultants.com/" target="_blank" rel="noopener">Order a certified appraisal</a>
+        <a class="btn btn-outline" id="oVr" href="https://www.estimateconsultants.com/markettrue-value.html" target="_blank" rel="noopener">Order a Valuation Report</a>
+      </div>
+      <p class="fine">A certified appraisal is reviewed and signed by a certified appraiser, from $299 before your discount. A Valuation Report is the comparable vehicles and adjustments behind the value, ready in minutes; it is not a certified appraisal.</p>
     </div>
 
     <div class="dash-grid">
       <div class="card block">
-        <div class="block-head"><div><h2>Referrals</h2><p>Each time a client uses your code and we begin their appraisal, $50 is earned.</p></div></div>
+        <div class="block-head"><div><h2>Referrals</h2><p><span class="pay-only">Each time a client uses your code and we begin their appraisal, $50 is earned.</span><span class="pro-only">Each client who uses your code appears here.</span></p></div></div>
         <div id="refs"></div>
       </div>
 
       <aside class="side">
-        <div class="card block">
+        <div class="card block pay-only">
           <div class="block-head"><div><h2>Where the $50 goes</h2><p>Add one or several. You choose who gets each referral.</p></div></div>
           <div id="payees"></div>
           <button class="btn btn-outline wide" type="button" id="addPayee">+ Add a destination</button>
@@ -339,6 +360,6 @@
 <div id="printRoot" aria-hidden="true"></div>
 
 <script src="assets/qr.js"></script>
-<script src="assets/app.js"></script>
+<script src="assets/app.js?v=2"></script>
 </body>
 </html>

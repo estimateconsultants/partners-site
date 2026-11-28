@@ -143,6 +143,7 @@
     api({ action: "partner_signup", firm: $("jFirm").value, contact: $("jContact").value, phone: $("jPhone").value, email: $("jEmail").value, code: code })
       .then(function (r) {
         state.joined = { firm: r.firm || $("jFirm").value.trim(), code: r.code, email: $("jEmail").value.trim().toLowerCase() };
+        store("ecp_new", "1");
         $("doneCode").textContent = r.code; $("doneFirm").textContent = state.joined.firm;
         swap("joinForm2", "joinDone"); setProgress(3);
       })
@@ -216,11 +217,30 @@
     function tick(t) { if (!start) start = t; var p = Math.min(1, (t - start) / dur), e = 1 - Math.pow(1 - p, 3); el.textContent = fmt(from + (to - from) * e); if (p < 1) requestAnimationFrame(tick); }
     requestAnimationFrame(tick);
   }
+  /* Payouts are being phased out: accounts made from Nov 28, 2026 on never see them. An account keeps them when it
+     was made before that date, or already has a payout destination or money earned. */
+  var PAY_END = Date.UTC(2026, 10, 28, 5);
+  function hasPayouts(r) {
+    var s = r.stats || {};
+    if ((r.payees || []).length || s.owedAmount > 0 || s.paidAmount > 0 || s.owed > 0 || s.paid > 0) return true;
+    var since = String((r.profile || {}).since || ""), t = Date.parse(since);
+    if (!since || isNaN(t)) return !store("ecp_new");          // no date to go by: only an account created in this browser since the change is new
+    if (!/\b\d{1,2}(st|nd|rd|th)?,?\s+\d{4}|\d{1,2}\/\d{1,2}\/\d{2,4}|\d{4}-\d{2}-\d{2}/.test(since)) {   // month and year only
+      var d = new Date(t), ym = d.getFullYear() * 12 + d.getMonth();
+      if (ym === 2026 * 12 + 10) return !store("ecp_new");
+      return ym < 2026 * 12 + 10;
+    }
+    return t < PAY_END;
+  }
   function renderDash(r) {
-    var p = r.profile, s = r.stats;
+    var p = r.profile, s = r.stats, pay = hasPayouts(r);
+    document.body.classList.toggle("no-pay", !pay);
+    var proQ = "pro=" + encodeURIComponent(p.code);
+    $("oVr").href = "https://www.estimateconsultants.com/markettrue-value.html?for=general&" + proQ;
+    $("orderForm").dataset.code = p.code;
     var share = "https://www.estimateconsultants.com/markettrue-value.html?ref=" + encodeURIComponent(p.code);
     if ($("shareLink")) { $("shareLink").value = share; $("shareQr").innerHTML = window.EC_QR.svg(share, { dark: "#17181B", light: "#FFFFFF", margin: 1, label: "QR code for the free offer check" }); }
-    $("dashTitle").textContent = p.firm; $("dashCode").textContent = p.code; $("dashSince").textContent = "Preferred Partner" + (p.since ? " since " + p.since : "");
+    $("dashTitle").textContent = p.firm; $("dashCode").textContent = p.code; $("dashSince").textContent = (pay ? "Preferred Partner" : "Professional account") + (p.since ? " since " + p.since : "");
     countUp($("stSubmitted"), s.submitted, function (v) { return Math.round(v); });
     countUp($("stAppraisals"), s.appraisals, function (v) { return Math.round(v); });
     countUp($("stOwed"), s.owedAmount, function (v) { return money(v); });
@@ -236,9 +256,10 @@
     var box = $("refs"), list = r.referrals;
     if (!list.length) { box.innerHTML = '<div class="empty"><b>Your first referral will appear here.</b>Share your flyer or your code <strong>' + esc(r.profile.code) + "</strong> with clients. You'll see each one the moment they use it.</div>"; return; }
     var byId = {}; r.payees.forEach(function (x) { byId[x.id] = x; });
-    var html = '<div class="rtable"><div class="rrow head"><span>Date</span><span>Client</span><span>Status</span><span>Pay to</span></div>';
+    var noPay = document.body.classList.contains("no-pay");
+    var html = '<div class="rtable"><div class="rrow head"><span>Date</span><span>Client</span><span>Status</span><span class="payto">Pay to</span></div>';
     list.forEach(function (x) {
-      var pill = x.state === "paid" ? '<span class="pill paid">Paid</span>' : x.state === "owed" ? '<span class="pill owed">$' + r.stats.amount + " on the way</span>" : '<span class="pill submitted">Code used</span>';
+      var pill = x.state === "paid" ? '<span class="pill paid">' + (noPay ? "Appraisal done" : "Paid") + "</span>" : x.state === "owed" ? (noPay ? '<span class="pill owed">Appraisal started</span>' : '<span class="pill owed">$' + r.stats.amount + " on the way</span>") : '<span class="pill submitted">Code used</span>';
       var pay;
       if (x.state === "paid") pay = '<span class="meta">' + esc(x.payeeLabel || "—") + "<br>" + (x.paidOn ? "Paid " + esc(x.paidOn) : "") + (x.reference ? " · " + esc(x.reference) : "") + "</span>";
       else if (!r.payees.length) pay = '<span class="meta">Add a destination to choose</span>';
@@ -247,6 +268,14 @@
     });
     box.innerHTML = html + "</div>";
   }
+  /* Value a vehicle: opens the free value tool with the VIN and the office code handed over. */
+  $("orderForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var v = $("oVin").value.toUpperCase().replace(/[^A-Z0-9]/g, ""), code = this.dataset.code || "";
+    if (v.length !== 17 || /[IOQ]/.test(v)) { $("oErr").textContent = "Enter the full 17-character VIN (no I, O or Q)."; return; }
+    $("oErr").textContent = "";
+    window.open("https://www.estimateconsultants.com/markettrue-value.html?for=" + encodeURIComponent($("oFor").value) + "&pro=" + encodeURIComponent(code) + "#vin=" + v, "_blank", "noopener");
+  });
   $("refs").addEventListener("change", function (e) {
     var s = e.target.closest("select[data-ref]"); if (!s) return; s.disabled = true;
     api({ action: "partner_assign_payee", token: state.token, referralId: s.dataset.ref, payeeId: s.value }).then(function (r) { state.me = r; renderDash(r); toast("Saved."); })
