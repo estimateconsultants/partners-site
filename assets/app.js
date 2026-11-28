@@ -57,7 +57,7 @@
   }
   function show(name) {
     $$(".view").forEach(function (v) { var on = v.dataset.view === name; v.classList.remove("on"); if (on) { void v.offsetWidth; v.classList.add("on"); } });
-    document.title = (name === "home" ? "Preferred Partners" : name === "join" ? "Create your code" : name === "signin" ? "Sign in" : "Dashboard") + " — Estimate Consultants";
+    document.title = (name === "home" ? "Professional Accounts" : name === "join" ? "Create your code" : name === "signin" ? "Sign in" : "Your account") + " — Estimate Consultants";
     window.scrollTo(0, 0);
     renderNav(name);
     if (name === "join") joinReset();
@@ -240,7 +240,7 @@
     $("orderForm").dataset.code = p.code;
     var share = "https://www.estimateconsultants.com/markettrue-value.html?ref=" + encodeURIComponent(p.code);
     if ($("shareLink")) { $("shareLink").value = share; $("shareQr").innerHTML = window.EC_QR.svg(share, { dark: "#17181B", light: "#FFFFFF", margin: 1, label: "QR code for the free offer check" }); }
-    $("dashTitle").textContent = p.firm; $("dashCode").textContent = p.code; $("dashSince").textContent = (pay ? "Preferred Partner" : "Professional account") + (p.since ? " since " + p.since : "");
+    $("dashTitle").textContent = p.firm; $("dashCode").textContent = p.code; $("dashSince").textContent = "Professional account" + (p.since ? " since " + p.since : "");
     countUp($("stSubmitted"), s.submitted, function (v) { return Math.round(v); });
     countUp($("stAppraisals"), s.appraisals, function (v) { return Math.round(v); });
     countUp($("stOwed"), s.owedAmount, function (v) { return money(v); });
